@@ -275,6 +275,7 @@ op_code:000000    rs(5 bit)    rt(5 bit)   rd(5 bit)   0(5 bit)   func:100000
 beqz: if(rs==0)  pc=offset
 op_code:000001    rs(5 bit)    beqz:00010   offset(16 bit)
 
+
 */
 
 // Operations of the IF stage.
