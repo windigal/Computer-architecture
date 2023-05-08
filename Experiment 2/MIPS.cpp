@@ -98,7 +98,7 @@ string stagename[5] = {"IF", "ID", "EX", "MEM", "WB"};
 string ClockCycles_Diagram[1000][1000];     // Clockcycles diagram
 vector<Register> RegisterFile(32, {"", 0}); // Register file
 vector<Instruction> InstructionMemory;      // Instruction memory
-vector<Register> RegisterFile_else;         // Used for data staging in forwardiung
+vector<Register> RegisterFile_else;         // Used for data staging in forwarding
 list<Instructions_in_pipeline> pipline;     // The pipline
 int DataMemory[1000] = {0};                 // Data memory
 string file_path;
@@ -168,7 +168,6 @@ void program_Init()
         string num = to_string(i);
         RegisterFile[i] = {r + num, 0, false};
     }
-    InstructionMemory.clear();
     RegisterFile_else.clear();
     pipline.clear();
     memset(DataMemory, 0, sizeof(DataMemory));
@@ -185,6 +184,9 @@ void program_Init()
     id_ex = {0, 0, 0, Ir};
     ex_mem = {0, 0, Ir};
     mem_wb = {0, 0, Ir};
+
+    RegisterFile[1].value = 1;
+    RegisterFile[2].value = 2;
 }
 
 // Instruction standard representation
@@ -474,7 +476,7 @@ void MEM()
     }
     else if (ex_mem.ir.type == Store)
     {
-        DataMemory[ex_mem.alu_b] = ex_mem.alu_o;
+        DataMemory[ex_mem.alu_o] = ex_mem.alu_b;
     }
 }
 
